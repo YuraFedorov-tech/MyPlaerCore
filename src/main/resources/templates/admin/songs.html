@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>Панель админа</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"/>
+    <link rel="shortcut icon" href="#"/>
+    <link href="/css/admin/notification.css" type="text/css" rel="stylesheet"/>
+    <link href="/css/admin/admin.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container-fluid">
+
+    <div class="row" th:include="admin/fragment/navigation :: adminHeader"></div>
+
+    <div class="row">
+        <div class="col-lg-3 col-md-2 col-xs-2 left-bar left-menu">
+            <!--меню слева-->
+            <ul class="nav nav-pills nav-stacked nav-content" th:include="admin/fragment/navigation :: adminNavbar">
+            </ul>
+        </div>
+
+        <!--центральный блок-->
+        <div class="col-lg-9 col-md-10 col-xs-10">
+            <div class="tab-content">
+
+                <div role="tabpanel" class="tab-pane active" id="list-song">
+                    <ul class="nav nav-tabs nav-content" role="tablist">
+                        <li id="song-table-nav" class="active">
+                            <a id="tab-song-panel" href="#song-panel" aria-controls="song-panel" role="tab"
+                               data-toggle="tab">Все песни</a>
+                        </li>
+                        <li id="add-song-nav">
+                            <a href="#add-song-panel" aria-controls="add-song-panel" role="tab" data-toggle="tab">
+                                Новая песня</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <!--таблица песен-->
+                        <div role="tabpanel" class="tab-pane active" id="song-panel">
+                            <div class="panel panel-default table-panel">
+                                <div class="tab-content">
+                                    <div class="panel-body">
+                                        <table id="songsTable" class="table">
+                                            <thead id="getSongsTable">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Разрешена</th>
+                                                <th>Название</th>
+                                                <th>Автор</th>
+                                                <th>Жанр</th>
+                                                <th>Изменить</th>
+                                                <th>Удалить</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="all-songs">
+                                            <!--здесь ajax запрос-->
+                                            </tbody>
+
+
+                                            <!--модалка - обновление песни-->
+                                            <div id="editSong" class="modal fade">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                    aria-hidden="true">×
+                                                            </button>
+                                                            <h4 class="modal-title">Изменить песню</h4>
+                                                        </div>
+
+                                                        <div class="modal-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-lg-6 col-md-10 col-xs-10 col-lg-offset-3 col-xs-offset-2">
+
+                                                                        <div id="success-edit-message"
+                                                                             class="alert alert-danger hidden">
+                                                                            <div id="message"></div>
+                                                                        </div>
+                                                                        <form id="edit-form">
+                                                                            <div class="form-group text-center edit-form">
+                                                                                <label for="updateSongId">ID</label>
+                                                                                <input id="updateSongId"
+                                                                                       class="form-control"
+                                                                                       disabled="disabled" type="text"
+                                                                                       name="id" required=""/>
+                                                                                <input type="hidden"
+                                                                                       id="updateSongIdHidden"
+                                                                                       name="id"/>
+
+                                                                                <label for="updateSongAuthor">Автор</label>
+                                                                                <input id="updateSongAuthor"
+                                                                                       class="form-control"
+                                                                                       disabled="disabled" type="text"
+                                                                                       name="author" required=""/>
+                                                                                <input type="hidden"
+                                                                                       id="updateSongAuthorHidden"
+                                                                                       name="id"/>
+
+                                                                                <label for="updateSongName">Название</label>
+                                                                                <input id="updateSongName"
+                                                                                       class="form-control" type="text"
+                                                                                       name="name"
+                                                                                       required=""/>
+
+                                                                                <label for="updateSongSearchTags">
+                                                                                    Поисковые теги
+                                                                                </label>
+                                                                                <textarea
+                                                                                        id="updateSongSearchTags"
+                                                                                        class="form-control"
+                                                                                        name="searchTags"
+                                                                                        rows="5"
+                                                                                        required="">
+                                                                                </textarea>
+
+                                                                                <label for="updateSongGenre">Жанр</label>
+                                                                                <select class="form-control"
+                                                                                        id="updateSongGenre"
+                                                                                        name="updateGenre">
+                                                                                    <!--заполняем через js-->
+                                                                                </select>
+
+                                                                                <label for="updateSongApproved">
+                                                                                    Разрешена
+                                                                                </label>
+                                                                                <input id="updateSongApproved"
+                                                                                       name="approved"
+                                                                                       class="form-control"
+                                                                                       type="checkbox"/>
+
+                                                                            </div>
+                                                                        </form>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-default"
+                                                                    data-dismiss="modal">Закрыть
+                                                            </button>
+                                                            <button id="updateSongBtn" class="btn btn-primary"
+                                                                    data-dismiss="modal">Изменить
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--добавление песни-->
+                        <div role="tabpanel" class="tab-pane" id="add-song-panel">
+                            <div class="panel panel-default table-panel">
+                                <div class="tab-content">
+                                    <div class="panel-body">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-10 col-xs-10 col-lg-offset-3 col-xs-offset-2">
+                                                    <form id="addForm">
+                                                        <div class="form-group text-center edit-form">
+
+                                                            <label for="addSongName">Название</label>
+                                                            <input id="addSongName" class="form-control" type="text"
+                                                                   placeholder="Enter song name" name="songName"/>
+
+                                                            <label for="addSongAuthor">Автор</label>
+                                                            <input id="addSongAuthor" class="form-control" type="text"
+                                                                   placeholder="Enter author name" name="author"/>
+
+                                                            <label for="addSongTags">Поисковые теги</label>
+                                                            <textarea
+                                                                    id="addSongTags" class="form-control"
+                                                                    placeholder="Enter search tags" name="searchTags"
+                                                                    rows="5">
+                                                            </textarea>
+
+                                                            <label for="addSongGenre">Жанр</label>
+                                                            <select class="form-control" id="addSongGenre"
+                                                                    name="addGenre">
+                                                                <!--заполняем через js-->
+                                                            </select>
+                                                            <br/>
+                                                            <button type="button" id="addSongBtn"
+                                                                    class="btn btn-success btn-lg">
+                                                                Добавить
+                                                            </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script type="text/javascript" src="/js/security.js" rel="script"></script>
+<script type="text/javascript" src="/js/admin/admin.js" rel="script"></script>
+<script type="text/javascript" src="/js/admin/users.js" rel="script"></script>
+<script type="text/javascript" src="/js/notification.js" rel="script"></script>
+<script type="text/javascript" src="/js/stomp.js" rel="script"></script>
+<script type="text/javascript" src="/js/admin/songs.js" rel="script"></script>
+<script type="text/javascript" src="/js/notificationsHandler.js" rel="script"></script>
+</body>
+</html>
