@@ -1,7 +1,5 @@
 package spring.app.dao.abstraction;
 
-import spring.app.model.Genre;
-
 import java.io.Serializable;
 import java.util.List;
 

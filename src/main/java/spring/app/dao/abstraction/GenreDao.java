@@ -1,7 +1,6 @@
 package spring.app.dao.abstraction;
 
 import spring.app.model.Genre;
-import spring.app.model.OrgType;
 import spring.app.model.Song;
 
 import java.sql.Timestamp;
@@ -16,9 +15,10 @@ public interface GenreDao extends GenericDao<Long, Genre> {
 
     List<Song> getSongsByGenre(Genre genreForDelete);
 
+    void deleteReferenceFromCompanyByGenre(Genre genre);
 
-    void deleteReferenceFromCompanyByGenre(Genre genreForDelete);
+    void deleteReferenceFromOrgTypeByGenre(Genre genre);
 
-    void deleteReferenceFromOrgTypeByGenre(Genre genreForDelete);
+    void flush();
 }
 

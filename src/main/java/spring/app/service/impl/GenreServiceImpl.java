@@ -4,8 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.app.dao.abstraction.GenreDao;
-import spring.app.dao.abstraction.SongDao;
-import spring.app.dao.impl.GenreDaoImpl;
 import spring.app.model.Author;
 import spring.app.model.Genre;
 import spring.app.model.Song;
@@ -17,33 +15,32 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+
 @Service
-@Transactional
 public class GenreServiceImpl implements GenreService {
-    private final GenreDaoImpl genreDaoImpl;
     private final GenreDao genreDao;
-    private final SongDao songDao;
     private final SongCompilationService songCompilationService;
 
 
     @Autowired
-    public GenreServiceImpl(GenreDao genreDao, SongDao songDao, SongCompilationService songCompilationService, GenreDaoImpl genreDaoImpl) {
+    public GenreServiceImpl(GenreDao genreDao, SongCompilationService songCompilationService) {
         this.genreDao = genreDao;
-        this.songDao = songDao;
         this.songCompilationService = songCompilationService;
-        this.genreDaoImpl = genreDaoImpl;
     }
 
+    @Transactional
     @Override
     public void addGenre(Genre genre) {
         genreDao.save(genre);
     }
 
+    @Transactional
     @Override
     public void updateGenre(Genre genre) {
         genreDao.update(genre);
     }
 
+    @Transactional
     @Override
     public void deleteGenreById(Long id) {
         Genre notDefinedGenre = getByName("not defined");
@@ -51,9 +48,9 @@ public class GenreServiceImpl implements GenreService {
         // в сервисе только таким образом можно пробежать по всем авторам , удалить у них наш жанр и в случае если жанров у них больше нет добавить "не определенный"
         List<Author> authors = new ArrayList<>(genreForDelete.getAuthors());
         for (Author author : authors) {
-            author.removeGenre(genreForDelete);
+            author.getAuthorGenres().remove(genreForDelete);
             if (author.getAuthorGenres().size() == 0) {
-                author.addGenre(notDefinedGenre);
+                author.getAuthorGenres().add(notDefinedGenre);
             }
         }
 
@@ -69,30 +66,35 @@ public class GenreServiceImpl implements GenreService {
             songCompilation.setGenre(notDefinedGenre);
             genreForDelete.getSongCompilation().remove(songCompilation);
         }
-        genreDaoImpl.flush();
+        genreDao.flush();
         genreDao.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Genre getById(Long id) {
         return genreDao.getById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Genre getByName(String name) {
         return genreDao.getByName(name);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Genre> getByCreatedDateRange(Timestamp dateFrom, Timestamp dateTo) {
         return genreDao.getByCreatedDateRange(dateFrom, dateTo);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Genre> getAllGenre() {
         return genreDao.getAll();
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<Genre> getAllApprovedGenre() {
         return genreDao.getAllApproved();

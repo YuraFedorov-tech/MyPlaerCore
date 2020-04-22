@@ -31,13 +31,6 @@ public class Author extends Bannable {
             inverseJoinColumns = {@JoinColumn(name = "genre_id")})
     private Set<Genre> genres = new HashSet<>();
 
-    public void addGenre(Genre genre){
-        genres.add(genre);
-    }
-    public void removeGenre(Genre genre){
-        genres.remove(genre);
-    }
-
     @Column(name = "created_at", updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;

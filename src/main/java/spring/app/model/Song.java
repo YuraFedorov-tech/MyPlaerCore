@@ -56,12 +56,6 @@ public class Song extends Bannable {
             inverseJoinColumns = {@JoinColumn(name = "song_compilation_id")})
     private Set<SongCompilation> songCompilations;
 
-    public void addSongCompilation(SongCompilation songCompilation){
-        songCompilations.add(songCompilation);
-    }
-    public void removeSongCompilation(SongCompilation songCompilation){
-        songCompilations.remove(songCompilation);
-    }
     private String albumsCover;
 
     @Column(name = "created_at", updatable = false)
