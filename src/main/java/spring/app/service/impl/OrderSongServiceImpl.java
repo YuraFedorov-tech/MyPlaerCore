@@ -61,43 +61,5 @@ public class OrderSongServiceImpl extends AbstractServiceImpl<Long, OrderSong, O
         dao.bulkRemoveOrderSongByCompany(companyId);
     }
 
-    @Override
-    public List<SongDto> getTopSongsByNumberOfList(int numbOfList) {
-        List<Company> companies = companyService.getAll();
-        List<SongDto> songDtos = new ArrayList<>();
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        Timestamp beginTime = getBeginTime(numbOfList);
-        companies.forEach(c -> {
-            List<SongDto> addSongs = songSer
-        });
-        return songDtos;
-    }
 
-    private Timestamp getBeginTime(int numbOfList) {
-        int begin = 0;
-        switch (numbOfList) {
-            case 1:
-                begin = 1;
-                break;
-            case 2:
-                begin = 7;
-                break;
-            case 3:
-                begin = 30;
-                break;
-            case 4:
-                begin = 365;
-                break;
-            default:
-                throw new IllegalArgumentException(); //выборка может быть за день, неделю, месяц или год
-        }
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -begin);
-        cal.set(Calendar.HOUR_OF_DAY, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        Date beginDay = cal.getTime();
-        Timestamp beginTimestamp = new Timestamp(beginDay.getTime());
-        return beginTimestamp;
-    }
 }

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import spring.app.dao.abstraction.SongDao;
 import spring.app.dao.abstraction.dto.SongDtoDao;
 import spring.app.dto.SongDto;
+import spring.app.dto.SongDtoTop;
 import spring.app.model.Song;
 import spring.app.model.SongCompilation;
 import spring.app.service.abstraction.SongCompilationService;
@@ -13,12 +14,11 @@ import spring.app.service.abstraction.SongFileService;
 import spring.app.service.abstraction.SongService;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class SongServiceImpl extends AbstractServiceImpl<Long, Song, SongDao> implements SongService {
+
 
     private final SongDtoDao songDtoDao;
     private final SongCompilationService songCompilationService;
@@ -113,4 +113,42 @@ public class SongServiceImpl extends AbstractServiceImpl<Long, Song, SongDao> im
         songFileService.deleteSongFile(song);
     }
 
+    @Override
+    public List<SongDtoTop> getTopSongsByNumberOfList(int numbOfList) {
+        Timestamp startTime = getBeginTime(numbOfList);
+        Timestamp endTime = new Timestamp(System.currentTimeMillis());
+        System.out.println("11111111111111111" + startTime + "    " + endTime);
+        List<SongDtoTop> songDtos = songDtoDao.getTopSongsByNumberOfList(startTime, endTime);
+        Collections.sort(songDtos);
+        return songDtos;
+    }
+
+    private Timestamp getBeginTime(int numbOfList) {
+        int begin = 0;
+        switch (numbOfList) {
+            case 1:
+                begin = 1;
+                break;
+            case 2:
+                begin = 7;
+                break;
+            case 3:
+                begin = 30;
+                break;
+            case 4:
+                begin = 365;
+                break;
+            default:
+                throw new IllegalArgumentException(); //выборка может быть за день, неделю, месяц или год
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -begin);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        Date beginDay = cal.getTime();
+        Timestamp beginTimestamp = new Timestamp(beginDay.getTime());
+        return beginTimestamp;
+    }
 }

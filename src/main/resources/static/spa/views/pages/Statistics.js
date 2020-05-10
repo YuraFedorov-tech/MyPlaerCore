@@ -5,7 +5,7 @@ let Statistics = {
 
         return /*html*/ '        <!--центральный блок-->\n' +
             '            <div role="tabpanel" class="tab-pane active col-lg-7 col-md-6 col-xs-7 " id="my-selection">\n' +
-            // '                <H3> Статистика</H3>\n' +
+            '                <H3> Статистика</H3>\n' +
             getTopSongs()+
             '            </div>\n' +
             '        <div class="container col-lg-4 col-md-4 col-xs-4 col-xl-4" id="right-side-bar">\n' +

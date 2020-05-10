@@ -60,11 +60,6 @@ public class OrderSongRestController {
         List<String> queueList = companyService.getAllSongsInQueueByCompanyId(companyId);
         return queueList;
     }
-    @PostMapping("getTopSongs/{numbOfList}")
-    public List<SongDto> getTopSongs(@PathVariable Long numbOfList) {
-        LOGGER.info("POST request 'getTopSongs'  numbOfList = {}", numbOfList);
-        List<SongDto> songDtos=orderSongService.getTopSongsByNumberOfList(numbOfList);
-        return songDtos;
-    }
+
 
 }

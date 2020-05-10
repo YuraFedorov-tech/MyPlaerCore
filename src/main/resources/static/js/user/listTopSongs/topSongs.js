@@ -33,16 +33,11 @@ function getListSong() {
 function getTopSongs() {
     return '<div class="container">\n' +
         '    <div class="row">\n' +
-        '        <div class="js-textSongNameDelete">\n' +
-        '            <div>\n' +
-        '                <h4>топ песен за:</h4>\n' +
-        '            </div>\n' +
-        '        </div>\n' +
         '        <div class="col-md-5 ">\n' +
         '            <div class="layer">\n' +
-        '                <div class="js-textSongDelete">\n' +
+        '                <div id="js-textSongDelete" class="js-textSongDelete">\n' +
         '                    <div>\n' +
-        '                        <h5>'+getListSong()+'</h5>\n' +
+        '                        <h5>\'+getListSong()+\'</h5>\n' +
         '                    </div>\n' +
         '                </div>\n' +
         '            </div>\n' +

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import spring.app.dto.SongDto;
+import spring.app.dto.SongDtoTop;
 import spring.app.model.Company;
 import spring.app.model.Song;
 import spring.app.model.User;
@@ -108,6 +109,11 @@ public class SongRestController {
         user.setCompany(company);
         LOGGER.info("Song was removed from ban for the Company = {}", company.getName());
     }
-
+    @PostMapping("getTopSongs/{numbOfList}")
+    public List<SongDtoTop> getTopSongs(@PathVariable int numbOfList) {
+        LOGGER.info("POST request 'getTopSongs'  numbOfList = {}", numbOfList);
+        List<SongDtoTop> songDtos=songService.getTopSongsByNumberOfList(numbOfList);
+        return songDtos;
+    }
 
 }

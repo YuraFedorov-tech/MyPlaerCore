@@ -15,5 +15,4 @@ public interface OrderSongService extends GenericService<Long, OrderSong> {
 
     void bulkRemoveByCompany(Long userId);
 
-    List<SongDto> getTopSongsByNumberOfList(Long numbOfList);
 }
