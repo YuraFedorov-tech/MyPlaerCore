@@ -2,36 +2,31 @@ package spring.app.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import spring.app.dao.abstraction.OrderSongDao;
+import spring.app.dto.SongDto;
+import spring.app.model.Company;
 import spring.app.model.OrderSong;
 import spring.app.service.abstraction.OrderSongService;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @Service
-@Transactional
-public class OrderSongServiceImpl implements OrderSongService {
+public class OrderSongServiceImpl extends AbstractServiceImpl<Long, OrderSong, OrderSongDao> implements OrderSongService {
 
-
-    private OrderSongDao orderSongDao;
+    protected OrderSongServiceImpl(OrderSongDao dao) {
+        super(dao);
+    }
 
     @Autowired
-    public void setOrderSongDao(OrderSongDao orderSongDao) {
-        this.orderSongDao = orderSongDao;
-    }
-
-    @Override
-    public void addSongOrder(OrderSong songOrder) {
-        orderSongDao.save(songOrder);
-    }
-
+    private CompanyServiceImpl companyService;
 
     @Override
     public long getSongOrdersByCompanyIdAndPeriod(Long id, Long period) {
-        return orderSongDao.getSongOrdersByCompanyIdAndPeriod(id, new Timestamp(System.currentTimeMillis() - period * 24 * 60 * 60 * 1000));
+        return dao.getSongOrdersByCompanyIdAndPeriod(id, new Timestamp(System.currentTimeMillis() - period * 24 * 60 * 60 * 1000));
     }
 
     @Override
@@ -48,21 +43,61 @@ public class OrderSongServiceImpl implements OrderSongService {
         cal.set(Calendar.SECOND, 0);
         Date yesterday = cal.getTime();
         Timestamp startOfTheDayYesterday = new Timestamp(yesterday.getTime());
-        long result = orderSongDao.getSongOrdersByCompanyIdAndTimeRange(id, startOfTheDayToday, new Timestamp(System.currentTimeMillis()));
+        long result = dao.getSongOrdersByCompanyIdAndTimeRange(id, startOfTheDayToday, new Timestamp(System.currentTimeMillis()));
         if (period.equals("yesterday")) {
-            result = orderSongDao.getSongOrdersByCompanyIdAndTimeRange(id, startOfTheDayYesterday, startOfTheDayToday);
+            result = dao.getSongOrdersByCompanyIdAndTimeRange(id, startOfTheDayYesterday, startOfTheDayToday);
         }
         return result;
     }
 
     @Override
     public long countAll(Long companyId) {
-        return orderSongDao.countAll(companyId);
+        return dao.countAll(companyId);
     }
 
 
     @Override
     public void bulkRemoveByCompany(Long companyId) {
-        orderSongDao.bulkRemoveOrderSongByCompany(companyId);
+        dao.bulkRemoveOrderSongByCompany(companyId);
+    }
+
+    @Override
+    public List<SongDto> getTopSongsByNumberOfList(int numbOfList) {
+        List<Company> companies = companyService.getAll();
+        List<SongDto> songDtos = new ArrayList<>();
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        Timestamp beginTime = getBeginTime(numbOfList);
+        companies.forEach(c -> {
+            List<SongDto> addSongs = songSer
+        });
+        return songDtos;
+    }
+
+    private Timestamp getBeginTime(int numbOfList) {
+        int begin = 0;
+        switch (numbOfList) {
+            case 1:
+                begin = 1;
+                break;
+            case 2:
+                begin = 7;
+                break;
+            case 3:
+                begin = 30;
+                break;
+            case 4:
+                begin = 365;
+                break;
+            default:
+                throw new IllegalArgumentException(); //выборка может быть за день, неделю, месяц или год
+        }
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -begin);
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        Date beginDay = cal.getTime();
+        Timestamp beginTimestamp = new Timestamp(beginDay.getTime());
+        return beginTimestamp;
     }
 }

@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
-@Transactional(readOnly = true)
 public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDao {
 
     public AuthorDaoImpl() {
@@ -38,14 +37,6 @@ public class AuthorDaoImpl extends AbstractDao<Long, Author> implements AuthorDa
                 .createQuery("FROM Author a WHERE a.createdAt >= :dateFrom AND a.createdAt <= :dateTo ORDER BY a.createdAt", Author.class)
                 .setParameter("dateFrom", dateFrom)
                 .setParameter("dateTo", dateTo).getResultList();
-    }
-
-    public List<Author> getAllApproved() {
-        String genericClassName = Author.class.toGenericString();
-        genericClassName = genericClassName.substring(genericClassName.lastIndexOf('.') + 1);
-        String hql = "FROM " + genericClassName + " as c WHERE c.isApproved = true";
-        TypedQuery<Author> query = entityManager.createQuery(hql, Author.class);
-        return query.getResultList();
     }
 
     public List<Author> getApprovedPage(int pageNumber, int pageSize) {
