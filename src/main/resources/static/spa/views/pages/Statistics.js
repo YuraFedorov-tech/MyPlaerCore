@@ -6,7 +6,53 @@ let Statistics = {
         return /*html*/ '        <!--центральный блок-->\n' +
             '            <div role="tabpanel" class="tab-pane active col-lg-7 col-md-6 col-xs-7 " id="my-selection">\n' +
             '                <H3> Статистика</H3>\n' +
-            getTopSongs()+
+            '<div class="container">\n' +
+            '    <div class="row">\n' +
+            '        <div class="col-md-5 ">\n' +
+            '            <div class="layer">\n' +
+            '                <div id="js-textSongDelete" class="js-textSongDelete">\n' +
+            '                    <div>\n' +
+            '                        <h5>\'+getListSong()+\'</h5>\n' +
+            '                    </div>\n' +
+            '                </div>\n' +
+            '            </div>\n' +
+            '        </div>    <!--     текст   песни-->\n' +
+            '        <div class="col-md-2">\n' +
+            '            <div class="layer">\n' +
+            '                <div class="btn-group-vertical">\n' +
+            '                    <div aria-label="Vertical button group" class="btn-group-vertical" role="group">\n' +
+            '                        <button class="btn btn-light js-byDay js-numberOfList" value="1" type="button">топ за день</button>\n' +
+            '                        <button class="btn btn-light js-byWeek js-numberOfList" value="2" type="button">топ за неделю </button>\n' +
+            '                        <button class="btn btn-light js-byMonth js-numberOfList" value="3" type="button">топ за месяц </button>\n' +
+            '                        <button class="btn btn-light js-byYear js-numberOfList" value="4" type="button">топ за год</button>\n' +
+            '                    </div><!--        кнопки для выбора периода-->\n' +
+            '                </div>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '</div><!--        top songs-->\n' +
+            '\n' +
+            '\n' +
+            '<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="myModal" role="dialog"\n' +
+            '     tabindex="-1">\n' +
+            '    <div class="modal-dialog" role="document">\n' +
+            '        <div class="modal-content">\n' +
+            '            <div class="modal-header">\n' +
+            '                <h5 class="modal-title" id="exampleModalLabel">График</h5>\n' +
+            '                <button aria-label="Close" class="close" data-dismiss="modal" type="button">\n' +
+            '                    <span aria-hidden="true">&times;</span>\n' +
+            '                </button>\n' +
+            '            </div>\n' +
+            '            <div class="js-modal-body" id="js-modal-body">\n' +
+            '            </div>\n' +
+            '\n' +
+            '            <div class="modal-footer">\n' +
+            '                <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>\n' +
+            '            </div>\n' +
+            '        </div>\n' +
+            '    </div>\n' +
+            '</div>\n' +
+            '<!--   modal window -->'+
             '            </div>\n' +
             '        <div class="container col-lg-4 col-md-4 col-xs-4 col-xl-4" id="right-side-bar">\n' +
             '                <table class="table bg-white stats-table">\n' +

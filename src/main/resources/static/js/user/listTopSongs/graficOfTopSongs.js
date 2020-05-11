@@ -1,19 +1,30 @@
-
+let itemGrafic;
 $(document).ready(function () {
+    function bildGrafic(data) {
+        alert('bildGrafic');
+        console.log(data);
+    }
+
+
     $(document).on('click touchstart', '#js-modal', function () {
-        alert('btnModal');
-     //   let q=$(this).getAttribute(data-idsong);
         $(this).css({border: '2px solid blue'});
-       let item=this;
-
-
-        const idEdit =   $(this).val();
+        itemGrafic = this;
+        const idEdit = $(this).val();
         alert(numberOfList);
         alert(idEdit);
 
+
+        //    $('.js-modal-body div').remove(); //удалиь предидущий график
+        $('#js-modal-body').append(getListSong());
+        alert('вывод списка')
+
+        //  $('#js-modal-body').append('aaaaaaaa');
+        $('.js-modal-body').append('bbbbbbbbbbb');
+
+
         $.ajax({
             contentType: "application/json;",
-            url: "/api/music/getTopSongs/" + sas,
+            url: "/api/music/getGragicSongs/" + numberOfList + '/' + idEdit,
             type: "POST",
             //      data: JSON.stringify(newUser),
             //       async: true,
@@ -21,14 +32,12 @@ $(document).ready(function () {
             success: function (data) {
                 alert(data);
                 console.log(data);
-                insertListOfTopSongs(data);
-                //  numberOfList = numberOfListIt;
+                bildGrafic(data);
             },
             error: function () {
-                alert("Не удалось получить записи песен");
+                alert("Не удалось получить данные для построения графика");
             }
         });
-
 
 
     });

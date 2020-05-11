@@ -15,11 +15,25 @@ public class SongDtoTop  implements Comparable<SongDtoTop>{
     private String authorName;
 
     private Long amount ;
+    private int [][]point;
 
     public SongDtoTop(Long id, String name, String authorName) {
         this.id = id;
         this.name = name;
         this.authorName = authorName;
+    }
+
+    public SongDtoTop(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int[][] getPoint() {
+        return point;
+    }
+
+    public void setPoint(int[][] point) {
+        this.point = point;
     }
 
     public Long getId() {

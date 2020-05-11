@@ -2,7 +2,7 @@ let numberOfList;
 let item;
 let s;
 $(document).ready(function () {
-    alert(jQuery.fn.jquery);
+  //  alert(jQuery.fn.jquery);
 
 
     function getBtn(value) {
@@ -65,5 +65,6 @@ $(document).ready(function () {
         alert(numberOfList);
         item = this;
         getListSongAjax();
+
     });
 });

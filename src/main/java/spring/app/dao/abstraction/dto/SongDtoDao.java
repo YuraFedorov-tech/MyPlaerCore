@@ -11,4 +11,6 @@ public interface SongDtoDao {
     List<SongDto> getAll();
 
     List<SongDtoTop> getTopSongsByNumberOfList(Timestamp startTime,Timestamp endTime);
+
+    SongDtoTop getSongDtoTopWithPoint(Timestamp startTime, Timestamp endTime, Long idSong);
 }

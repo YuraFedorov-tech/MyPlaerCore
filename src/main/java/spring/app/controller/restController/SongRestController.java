@@ -115,5 +115,12 @@ public class SongRestController {
         List<SongDtoTop> songDtos=songService.getTopSongsByNumberOfList(numbOfList);
         return songDtos;
     }
+    @PostMapping("getGragicSongs/{numbOfList}/{idSong}")
+    public int [][] getGragicSongs(@PathVariable int numbOfList,@PathVariable Long idSong) {
+        LOGGER.info("POST request 'getGragicSongs'  numbOfList = {},  idSong = {}  ", numbOfList,idSong);
+      //  List<SongDtoTop> songDtos=songService.getTopSongsByNumberOfList(numbOfList);
+        SongDtoTop songDtoTop=songService.getSongDtoTopWithPoint(numbOfList,idSong);
+        return songDtoTop.getPoint();
+    }
 
 }

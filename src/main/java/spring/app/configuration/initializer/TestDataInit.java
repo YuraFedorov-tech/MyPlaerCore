@@ -528,6 +528,7 @@ public class TestDataInit {
 //        List<SongDtoTop> songDtoTopsAll = songService.getTopSongsByNumberOfList(4);
 //        List<SongDtoTop> songDtoTops = songService.getTopSongsByNumberOfList(2);
 
+        SongDtoTop songDtoTop=songService.getSongDtoTopWithPoint(4,80L);
     }
 
     private Timestamp getTimestamp(int numbOfList) {

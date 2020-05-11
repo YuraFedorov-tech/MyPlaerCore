@@ -118,9 +118,17 @@ public class SongServiceImpl extends AbstractServiceImpl<Long, Song, SongDao> im
         Timestamp startTime = getBeginTime(numbOfList);
         Timestamp endTime = new Timestamp(System.currentTimeMillis());
         System.out.println("11111111111111111" + startTime + "    " + endTime);
-        List<SongDtoTop> songDtos = songDtoDao.getTopSongsByNumberOfList(startTime, endTime);
-        Collections.sort(songDtos);
-        return songDtos;
+        List<SongDtoTop> songDtoTops = songDtoDao.getTopSongsByNumberOfList(startTime, endTime);
+        Collections.sort(songDtoTops);
+        return songDtoTops;
+    }
+
+    @Override
+    public SongDtoTop getSongDtoTopWithPoint(int numbOfList, Long idSong) {
+        Timestamp startTime = getBeginTime(numbOfList);
+        Timestamp endTime = new Timestamp(System.currentTimeMillis());
+        SongDtoTop songDtoTop = songDtoDao.getSongDtoTopWithPoint(startTime, endTime, idSong);
+        return songDtoTop;
     }
 
     private Timestamp getBeginTime(int numbOfList) {

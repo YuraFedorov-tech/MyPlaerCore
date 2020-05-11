@@ -42,4 +42,6 @@ public interface SongService extends GenericService<Long, Song>{
     Long getAuthorIdBySongId(Long songId);
 
     List<SongDtoTop> getTopSongsByNumberOfList(int numbOfList);
+
+    SongDtoTop getSongDtoTopWithPoint(int numbOfList, Long idSong);
 }
