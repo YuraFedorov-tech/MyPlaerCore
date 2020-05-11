@@ -22,62 +22,44 @@
 <div class="btn-group-vertical">
     <div aria-label="Vertical button group" class="btn-group-vertical" role="group">
         <button class="btn btn-light js-byDay js-numberOfList" data-numberOfList="1" type="button">топ за день</button>
-        <button class="btn btn-light js-byWeek js-numberOfList" data-numberOfList="2" type="button">топ за неделю </button>
-        <button class="btn btn-light js-byMonth js-numberOfList" data-numberOfList="3" type="button">топ за месяц </button>
+        <button class="btn btn-light js-byWeek js-numberOfList" data-numberOfList="2" type="button">топ за неделю
+        </button>
+        <button class="btn btn-light js-byMonth js-numberOfList" data-numberOfList="3" type="button">топ за месяц
+        </button>
         <button class="btn btn-light js-byYear js-numberOfList" data-numberOfList="4" type="button">топ за год</button>
     </div><!--        кнопки для выбора периода-->
 </div>
 
-</div>
+<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="myModal" role="dialog"
+     tabindex="-1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">График</h5>
+                <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="js-modal-body">
+            </div>
 
-
-<div class="btn-group-vertical">
-    <div aria-label="Vertical button group" class="btn-group-vertical" role="group">
-        <button class="btn btn-secondary" type="button">Button</button>
-        <button class="btn btn-secondary" type="button">Button</button>
-        <div class="btn-group" role="group">
-            <button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
-                    data-toggle="dropdown" id="btnGroupVerticalDrop1" type="button">
-                Dropdown
-            </button>
-            <div aria-labelledby="btnGroupVerticalDrop1" class="dropdown-menu">
-                <a class="dropdown-item" href="#">Dropdown link</a>
-                <a class="dropdown-item" href="#">Dropdown link</a>
-            </div>
-        </div>
-        <button class="btn btn-secondary" type="button">Button</button>
-        <button class="btn btn-secondary" type="button">Button</button>
-        <div class="btn-group" role="group">
-            <button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
-                    data-toggle="dropdown" id="btnGroupVerticalDrop2" type="button">
-                Dropdown
-            </button>
-            <div aria-labelledby="btnGroupVerticalDrop2" class="dropdown-menu">
-                <a class="dropdown-item" href="#">Dropdown link</a>
-                <a class="dropdown-item" href="#">Dropdown link</a>
-            </div>
-        </div>
-        <div class="btn-group" role="group">
-            <button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
-                    data-toggle="dropdown" id="btnGroupVerticalDrop3" type="button">
-                Dropdown
-            </button>
-            <div aria-labelledby="btnGroupVerticalDrop3" class="dropdown-menu">
-                <a class="dropdown-item" href="#">Dropdown link</a>
-                <a class="dropdown-item" href="#">Dropdown link</a>
-            </div>
-        </div>
-        <div class="btn-group" role="group">
-            <button aria-expanded="false" aria-haspopup="true" class="btn btn-secondary dropdown-toggle"
-                    data-toggle="dropdown" id="btnGroupVerticalDrop4" type="button">
-                Dropdown
-            </button>
-            <div aria-labelledby="btnGroupVerticalDrop4" class="dropdown-menu">
-                <a class="dropdown-item" href="#">Dropdown link</a>
-                <a class="dropdown-item" href="#">Dropdown link</a>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
             </div>
         </div>
     </div>
+</div>
+<!--   modal window -->
+
+
+<button class="btn btn-light btn-xs js-btnModal  " id="js-modal"
+        data-idsong=value.id
+        data-numberOfList=numberOfList
+        data-target="#myModal"
+        data-toggle="modal"
+        type="button">График
+</button>
+
 
 </body>
 </html>

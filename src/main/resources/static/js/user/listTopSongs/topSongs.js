@@ -55,5 +55,27 @@ function getTopSongs() {
         '            </div>\n' +
         '        </div>\n' +
         '    </div>\n' +
-        '</div><!--        top songs-->';
+        '</div><!--        top songs-->\n' +
+        '\n' +
+        '\n' +
+        '<div aria-hidden="true" aria-labelledby="exampleModalLabel" class="modal fade" id="myModal" role="dialog"\n' +
+        '     tabindex="-1">\n' +
+        '    <div class="modal-dialog" role="document">\n' +
+        '        <div class="modal-content">\n' +
+        '            <div class="modal-header">\n' +
+        '                <h5 class="modal-title" id="exampleModalLabel">График</h5>\n' +
+        '                <button aria-label="Close" class="close" data-dismiss="modal" type="button">\n' +
+        '                    <span aria-hidden="true">&times;</span>\n' +
+        '                </button>\n' +
+        '            </div>\n' +
+        '            <div class="modal-body">\n' +
+        '            </div>\n' +
+        '\n' +
+        '            <div class="modal-footer">\n' +
+        '                <button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>\n' +
+        '            </div>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '</div>\n' +
+        '<!--   modal window -->';
 }

@@ -1,26 +1,26 @@
-var numberOfList;
-var item;
-var s;
+let numberOfList;
+let item;
+let s;
 $(document).ready(function () {
     alert(jQuery.fn.jquery);
 
-    $(document).on('click touchstart', '.js-numberOfList', function () {
-        $(this).css({border: '2px solid red'});
-        numberOfListIt = $(this).val();
-        alert(numberOfList);
-        item = this;
-        getListSongAjax(numberOfListIt);
-    });
 
-    function getBtn() {
-        return "";
+    function getBtn(value) {
+        return '<button class="btn btn-light btn-xs  js-btnModal" id="js-modal"\n' +
+            '        data-target="#myModal"\n' +
+            '        data-toggle="modal"\n' +
+            '        data-idsong='+value.id +
+            '        value='+value.id +
+            '        data-numberOfList='+numberOfList +
+            '        type="button">График\n' +
+            '</button>';
     }
 
     function getStringList(data) {
         console.log(data);
         var ans = "";
         $.each(data, function (index, value) {
-            ans += '<div>' + value.name + '  ' + value.authorName + '  ' + value.amount +'  '+getBtn()+ '  </div>';
+            ans += '<div>' + value.name + '  ' + value.authorName + '  ' + value.amount +'  заказа  '+getBtn(value)+ '  </div>';
         });
         return ans;
     }
@@ -35,13 +35,14 @@ $(document).ready(function () {
         borderedBtn();
         $('.js-textSongDelete div').remove();
         var insert = getStringList(data);
+        alert('вывод списка')
         $('#js-textSongDelete').append(insert);
     }
 
-    function getListSongAjax(numberOfListIt) {
+    function getListSongAjax() {
         $.ajax({
             contentType: "application/json;",
-            url: "/api/music/getTopSongs/" + numberOfListIt,
+            url: "/api/music/getTopSongs/" + numberOfList,
             type: "POST",
             //      data: JSON.stringify(newUser),
             //       async: true,
@@ -50,11 +51,19 @@ $(document).ready(function () {
                 alert(data);
                 console.log(data);
                 insertListOfTopSongs(data);
-                numberOfList = numberOfListIt;
+              //  numberOfList = numberOfListIt;
             },
             error: function () {
                 alert("Не удалось получить записи песен");
             }
         });
     }
+
+    $(document).on('click touchstart', '.js-numberOfList', function () {
+        $(this).css({border: '2px solid red'});
+        numberOfList = $(this).val();
+        alert(numberOfList);
+        item = this;
+        getListSongAjax();
+    });
 });
